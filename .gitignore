@@ -1,0 +1,44 @@
+# ignore python related files
+__pycache__/
+*/__pycache__/
+*/*.egg-info/
+.eggs/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+venv/
+.venv/
+env/
+
+# ignore sdk binaries
+*/dll/
+*.dll
+*.dat
+*/dylib/
+*.bundle
+*.dylib
+*/so/
+*.so
+
+# ignore workfiles
+*.jpg
+*.raf
+*.png
+logs/
+*.log
+temp/
+*.tmp
+
+# ignore build artifacts
+dist/
+build/
+
+# ignore OS and editor specific files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# ignore miscellaneous sensitive files
+.env
+.env.*

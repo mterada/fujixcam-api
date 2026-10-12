@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fujixcam"
+version = "0.2.1"
+description = "Python wrapper for FUJIFILM Camera Control SDK (X/GFX tethered cameras)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE.txt"]
+authors = [
+    { name = "Masahiro Terada" }
+]
+keywords = ["fujifilm", "camera", "sdk", "tether", "photo", "imaging"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Graphics :: Capture :: Digital Camera",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.optional-dependencies]
+test = [
+    "numpy>=1.24",
+    "opencv-python>=4.8",
+]
+
+[project.urls]
+Documentation = "https://github.com/mterada/fujixcam-api#readme"
+Repository = "https://github.com/mterada/fujixcam-api"
+Discussions = "https://github.com/mterada/fujixcam-api/discussions"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["fujixcam*"]
+
+[tool.setuptools.package-data]
+fujixcam = ["_clickwrap.ini"]
