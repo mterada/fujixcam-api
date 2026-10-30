@@ -63,7 +63,8 @@ XSDK_RELEASE_S2          = 0x0300   # 単独では使えない S2_S1OFF で使�
 XSDK_RELEASE_S2_S1OFF   = (XSDK_RELEASE_S2 | XSDK_RELEASE_N_S1OFF)   # 0x0304 半押し状態から撮影
 XSDK_RELEASE_BULB_ON     = 0x0400
 XSDK_RELEASE_N_BULBOFF   = 0x0008
-XSDK_RELEASE_BULBS2_ON  = (XSDK_RELEASE_BULB_ON|XSDK_RELEASE_N_S1OFF)  # 0x0404 半押し状態からBULB開始
+XSDK_RELEASE_BULBS2_ON   = 0x0500   # 半押し状態からBULB開始
+#XSDK_RELEASE_BULBS_S1OFF = (XSDK_RELEASE_BULBS_ON|XSDK_RELEASE_N_S1OFF)  # 0x0404
 XSDK_RELEASE_N_BULBS1OFF = (XSDK_RELEASE_N_BULBOFF | XSDK_RELEASE_N_S1OFF) # 0x000C BULB終了
 XSDK_RELEASE_CANCEL      = 0x000F   # 長時間露光時の中止
 # Auto Lock (Exposure/Focus/White Balance)
@@ -464,10 +465,8 @@ class FujiSDK:
             if func is None:
                 # Raise an error if the function is not found in the SDK library.
                 raise AttributeError(f"Function {func_name} not found in the SDK library.")
-            if argtypes is not None:
-                func.argtypes = argtypes
-            if restype is not None:
-                func.restype = restype
+            func.argtypes = argtypes if argtypes is not None else []
+            func.restype  = restype  if restype is not None else c_long
             return func
 
         try:
@@ -580,13 +579,12 @@ class FujiSDK:
             self.m_pfnSetProp       = api_entry("XSDK_SetProp", argtypes=[c_longlong, c_long, c_long], restype=c_long )
             self.m_pfnGetProp       = api_entry("XSDK_GetProp", argtypes=[c_longlong, c_long, c_long], restype=c_long )
             # Cast the generic property functions to specific function signatures
-        #    self.m_pfnCapProp_CPNL  = cast(self.m_pfnCapProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, POINTER(c_long), POINTER(c_long)))
-        #    self.m_pfnCapProp_CPONL = cast(self.m_pfnCapProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long, POINTER(c_long), POINTER(c_long)))
-        #    self.m_pfnSetProp_C     = cast(self.m_pfnSetProp, CFUNCTYPE(c_long, c_longlong, c_long))
-        #    self.m_pfnSetProp_CPL   = cast(self.m_pfnSetProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long))
-        #    self.m_pfnSetProp_CPOL  = cast(self.m_pfnSetProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long, c_long))
-        #    self.m_pfnGetProp_CPL   = cast(self.m_pfnGetProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, POINTER(c_long)))
-        #    self.m_pfnGetProp_CPOL  = cast(self.m_pfnGetProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long, POINTER(c_long)))
+        #    self.m_pfnCapProp_PP  = cast(self.m_pfnCapProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, POINTER(c_long), POINTER(c_long)))
+        #    self.m_pfnCapProp_LPP = cast(self.m_pfnCapProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long, POINTER(c_long), POINTER(c_long)))
+        #    self.m_pfnSetProp_L   = cast(self.m_pfnSetProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long))
+        #    self.m_pfnSetProp_LL  = cast(self.m_pfnSetProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long, c_long))
+        #    self.m_pfnGetProp_LP   = cast(self.m_pfnGetProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, POINTER(c_long)))
+        #    self.m_pfnGetProp_LLP  = cast(self.m_pfnGetProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long, POINTER(c_long)))
         #
         #    self.m_pfnCapProp_FocusArea = cast(self.m_pfnCapProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long, POINTER(FocusArea), POINTER(FocusArea)))
         #    self.m_pfnSetProp_FocusArea = cast(self.m_pfnSetProp, CFUNCTYPE(c_long, c_longlong, c_long, c_long, c_long, POINTER(FocusArea)))

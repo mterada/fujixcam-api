@@ -33,6 +33,7 @@ temp/
 # ignore build artifacts
 dist/
 build/
+src/fujixcam/_version.py
 
 # ignore OS and editor specific files
 .DS_Store

@@ -178,7 +178,6 @@ https://www.fujifilm-x.com/special/camera-control-sdk \
 
 ---
 ### Known Issues
-- macOSではバルブ撮影が起動できません（原因調査中）(X-S10, MacBookAir/M1-MacOS26.7.1, Python 3.12.15, 3,14.8)
 - 全ての機種での確認を行っているわけではありません。カメラにより異なる挙動や期待通りに動作しない場合があります。
 
 ---

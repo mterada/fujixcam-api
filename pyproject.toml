@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=77", "wheel"]
+requires = ["setuptools>=77", "wheel", "setuptools_scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "fujixcam"
-version = "0.2.1"
+dynamic = ["version"]
 description = "Python wrapper for FUJIFILM Camera Control SDK (X/GFX tethered cameras)."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -49,3 +49,7 @@ include = ["fujixcam*"]
 
 [tool.setuptools.package-data]
 fujixcam = ["_clickwrap.ini"]
+
+[tool.setuptools_scm]
+write_to = "src/fujixcam/_version.py"
+local_scheme = "no-local-version"

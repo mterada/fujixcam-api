@@ -21,7 +21,11 @@ from fujixcam.camera import Camera
 from fujixcam.results import ResultBase, ResultStatus, ResultConfig, ResultFiles, ResultImage
 from fujixcam.results import CameraStatus, ExposureSettings, ExposureOptions, FocusSettings, FocusOptions, ImageSettings, ImageOptions, LiveviewSettings, LiveviewOptions
 
-__version__ = "0.2.1"
+try:
+    from fujixcam._version import __version__
+except ImportError:
+    __version__ = "0.0.0.dev0"
+
 __author__ = "Masahiro Terada"
 __all__ = [
     "CameraAPI",
